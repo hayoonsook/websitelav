@@ -1,1 +1,296 @@
-# websitelav
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Rate Card - Lavina</title>
+<style>
+  /* Reset */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    background: #e3eaf2;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 600px;
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+  }
+  .profile-card {
+    background: white;
+    width: 100%;
+    max-width: 350px;
+    border-radius: 20px;
+    box-shadow: 0 16px 30px rgba(0,0,0,0.12);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.3s ease;
+  }
+  .profile-card:hover {
+    box-shadow: 0 26px 45px rgba(0,0,0,0.18);
+  }
+  /* Carousel container */
+  .carousel {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    border-radius: 0; /* inherited from .profile-card */
+  }
+  .carousel img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    user-select: none;
+    display: none;
+  }
+  .carousel img.active {
+    display: block;
+  }
+  /* Carousel controls */
+  .carousel-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    pointer-events: none;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+  }
+  button.control-btn {
+    pointer-events: all;
+    background: rgba(0,0,0,0.4);
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    padding: 8px 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.3s ease;
+  }
+  button.control-btn:hover,
+  button.control-btn:focus {
+    background: rgba(0,0,0,0.7);
+    outline: none;
+  }
+  .profile-content {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .name {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #2c3e50;
+    margin: 0 0 6px 0;
+  }
+  .title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #627d98;
+    margin: 0 0 6px 0;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+  }
+  .location {
+    font-size: 0.9rem;
+    color: #4a5a6a;
+    margin-bottom: 16px;
+  }
+  .instagram {
+    margin-bottom: 16px;
+    display: flex;
+    gap: 18px;
+  }
+  .insta-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #8d8d8df5;
+    text-decoration: none;
+    font-weight: 600;
+    user-select: none;
+    transition: color 0.3s ease;
+  }
+  .bio {
+    font-size: 0.95rem;
+    color: #4a5a6a;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    flex-grow: 1;
+  }
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .skill-tag {
+    background: #8d8d8df5;
+    color: white;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 30px;
+    user-select: none;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(107, 107, 107, 0.4);
+    transition: background 0.3s ease;
+  }
+  .skill-tag:hover {
+    background: #646464f5;
+  }
+  .rate-card {
+    margin-bottom: 24px;
+  }
+  .rate-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #34495e;
+    margin-bottom: 12px;
+    border-bottom: 2px solid #8d8d8df5;
+    padding-bottom: 6px;
+  }
+  .rate-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .rate-list li {
+    font-size: 1.05rem;
+    color: #2c3e50;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .rate-list li span.price {
+    color: #8d8d8df5;
+    font-weight: 700;
+  }
+  .contact-btn {
+    display: inline-block;
+    text-align: center;
+    background: #8d8d8df5;
+    color: white;
+    text-decoration: none;
+    padding: 14px 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 6px 15px rgba(143, 143, 143, 0.5);
+    transition: background 0.3s ease;
+    width: 100%;
+  }
+  .contact-btn:hover,
+  .contact-btn:focus {
+    background: #646464f5;
+    outline: none;
+  }
+  /* Mobile responsiveness */
+  @media(max-width:350px) {
+    .profile-card {
+      max-width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+<article class="profile-card" role="region" aria-label="Rate card for Lavina">
+  <div class="carousel" aria-label="Profile photos carousel">
+    <img src="DSCF9490.JPG" alt="Photo of Lavina, Muse and Model 1" class="active" loading="lazy" />
+    <img src="DSCF9351.JPG" alt="Photo of Lavina, Muse and Model 2" loading="lazy" />
+    <img src="DSCF9458.JPG" alt="Photo of Lavina, Muse and Model 3" loading="lazy" />
+    <img src="DSCF9314.JPG" alt="Photo of Lavina, Muse and Model 4" loading="lazy" />
+    <img src="SCL_5.jpg" alt="Photo of Lavina, Muse and Model 5" loading="lazy" />
+    <img src="IMG-20250430-WA0009.jpg" alt="Photo of Lavina, Muse and Model 6" loading="lazy" />
+    <img src="1000187853.jpg" alt="Photo of Lavina, Muse and Model 7" loading="lazy" />
+    <div class="carousel-controls">
+      <button class="control-btn" aria-label="Previous photo" id="prevBtn">&#10094;</button>
+      <button class="control-btn" aria-label="Next photo" id="nextBtn">&#10095;</button>
+    </div>
+  </div>
+  <div class="profile-content">
+    <h1 class="name">Lavina</h1>
+    <h2 class="title">Muse &amp; Model</h2>
+    <div class="location" aria-label="Location">
+      📍 Sidoarjo &amp; Surabaya
+    </div>
+    <p class="bio">
+      Available for photoshoot, beauty shoot, catalog, commercial, and more.
+    </p>
+    <div class="instagram" aria-label="Instagram profiles">
+      <a href="https://instagram.com/maria_lavina" target="_blank" rel="noopener" class="insta-link" aria-label="Instagram profile maria_lavina" tabindex="0">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" width="24" height="24">
+          <path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5A4.25 4.25 0 003.5 7.75v8.5A4.25 4.25 0 007.75 20.5h8.5a4.25 4.25 0 004.25-4.25v-8.5A4.25 4.25 0 0016.25 3.5h-8.5zm8.75 2.5a1 1 0 110 2 1 1 0 010-2zm-4.25 1A5.5 5.5 0 1110 18a5.5 5.5 0 012.25-11zM12 9.75a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z"/>
+        </svg>
+        <span class="insta-label">personal</span>
+      </a>
+      <a href="https://instagram.com/portofoliobylav" target="_blank" rel="noopener" class="insta-link" aria-label="Instagram profile portofoliobylav" tabindex="0">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" width="24" height="24">
+          <path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5A4.25 4.25 0 003.5 7.75v8.5A4.25 4.25 0 007.75 20.5h8.5a4.25 4.25 0 004.25-4.25v-8.5A4.25 4.25 0 0016.25 3.5h-8.5zm8.75 2.5a1 1 0 110 2 1 1 0 010-2zm-4.25 1A5.5 5.5 0 1110 18a5.5 5.5 0 012.25-11zM12 9.75a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z"/>
+        </svg>
+        <span class="insta-label">portofolio</span>
+      </a>
+    </div>
+    <section class="rate-card" aria-label="Service rates">
+      <h3>Rate</h3> 
+      <ul class="rate-list">
+        <li><span>3-4 hours</span> <span class="price">150k</span></li>
+        <li><span>7-8 hours</span> <span class="price">300k</span></li>
+        <li><span>11-12 hours</span> <span class="price">500k</span></li>
+        <li><span>1 day (max 14h)</span> <span class="price">600k</span></li>
+      </ul>
+    </section>
+    <a href="https://wa.link/mgvi44" target="_blank" rel="noopener" class="contact-btn" aria-label="Contact Lavina on WhatsApp">Contact Me</a>
+  </div>
+</article>
+<script>
+  (function(){
+    const images = document.querySelectorAll('.carousel img');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let currentIndex = 0;
+
+    function showImage(index) {
+      images.forEach((img, i) => {
+        img.classList.toggle('active', i === index);
+      });
+    }
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage(currentIndex);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage(currentIndex);
+    });
+
+    // Optional: Enable keyboard navigation (left/right arrows)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        prevBtn.click();
+      } else if (e.key === 'ArrowRight') {
+        nextBtn.click();
+      }
+    });
+  })();
+</script>
+</body>
+</html>
+</content>
+</create_file>
